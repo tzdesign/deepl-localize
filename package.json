@@ -1,0 +1,35 @@
+{
+  "name": "deepl-localize",
+  "description": "Translation for $localize files with deepl",
+  "main": "dist/index.js",
+  "author": "Tobias Zimmermann",
+  "repository": {
+    "url": "https://github.com/tzdesign/deepl-localize"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cli-progress": "^3.12.0",
+    "colors": "^1.4.0",
+    "commander": "^11.0.0",
+    "deepl-node": "^1.10.2",
+    "figlet": "^1.6.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/cli-progress": "^3.11.3",
+    "@types/figlet": "^1.5.6",
+    "@types/node": "^20.8.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test:translate": "tsc && node dist/index.js translate -b src/test/en-US.json -l de-DE de-CH fr-FR sk-SK -i de-DE",
+    "test:stale": "tsc && node dist/index.js remove-stale -b src/test/en-US.json -l de-DE de-CH",
+    "test:drystale": "tsc && node dist/index.js remove-stale -d -b src/test/en-US.json -l de-DE de-CH"
+  },
+  "bin": {
+    "deepl-localize": "./dist/index.js"
+  },
+  "version": "1.0.0"
+}

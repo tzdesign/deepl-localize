@@ -1,0 +1,11 @@
+**/.DS_Store
+*-debug.log
+*-error.log
+/.idea
+/.nyc_output
+/lib
+/package-lock.json
+/tmp
+/src
+/.github
+tsconfig.json
