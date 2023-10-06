@@ -33,7 +33,17 @@ Keep in mind that Angular's internationalization and localization features, incl
 ## Installation
 
 ```shell
-yarn add deepl-localize
+npm install deepl-localize -D
+```
+or
+```shell
+yarn add deepl-localize -D
+```
+
+Of course you can use it with `npx` as well.
+
+```shell
+npx deepl-localize translate -b your/path/en-US.json -l de-DE fr-FR -i de-DE -a "YOUR-DEEPL-API-KEY"
 ```
 
 ## Translation
@@ -52,7 +62,7 @@ deepl-localize translate -b your/path/en-US.json -l de-DE fr-FR -i de-DE -a "YOU
 | -v, --version                      | output the version number                                                                                     |
 | -b, --base  <value>                | The base file path.                                                                                           |
 | -o, --output <value>               | The output folder path. If none is given, the base folder is used.                                            |
-| -l, --locales  [value...]          | Locales to translate to. For example de-DE,fr-FR. If none is given, no translation will happen. (default: []) |
+| -l, --locales  [value...]          | Locales to translate to. For example de-DE fr-FR. If none is given, no translation will happen. (default: []) |
 | -i, --informal-locales  [value...] | Locales to translate less formal. For example de-DE will use du instead of sie. (default: [])                 |
 | -h, --help                         | display help for command                                                                                      |
 
@@ -72,6 +82,6 @@ deepl-localize remove-stale -b your/path/en-US.json -l de-DE fr-FR
 | -v, --version             | output the version number                                                                                     |
 | -b, --base  <value>       | The base file path.                                                                                           |
 | -o, --output <value>      | The output folder path. If none is given, the base folder is used.                                            |
-| -l, --locales  [value...] | Locales to translate to. For example de-DE,fr-FR. If none is given, no translation will happen. (default: []) |
+| -l, --locales  [value...] | Locales to translate to. For example de-DE fr-FR. If none is given, no translation will happen. (default: []) |
 | -d,--dry-run              | Just show the stale translations. The script will not remove and just show them. (default: false)             |
 | -h, --help                | display help for command                                                                                      |
