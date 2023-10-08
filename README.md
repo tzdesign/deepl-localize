@@ -67,7 +67,7 @@ deepl-localize translate -b your/path/en-US.json -l de-DE fr-FR -i de-DE -a "YOU
 | -h, --help                         | display help for command                                                                                      |
 
 
-## Translation
+## Stale
 
 ### Usage
                              
