@@ -6,6 +6,7 @@ import { localizeFileSchema, validateBase } from "../translate/validateBase";
 import fs, { write } from "fs";
 import "colors";
 import { readMeta, writeMeta } from "../translate/meta";
+import outputFilename from "../translate/outputFilename";
 
 export type StaleOptions = Omit<TranslationOptions, "informalLocales"> & {
   dryRun: boolean;
@@ -31,17 +32,12 @@ export default async function stale(this: Command) {
 
   for (const targetLocaleString of options.locales) {
     try {
+      const filename = outputFilename(targetLocaleString, {
+        base: options.base,
+        output: options.output,
+      });
       let currentTranslations = localizeFileSchema.parse(
-        JSON.parse(
-          fs
-            .readFileSync(
-              `${outputDir(
-                options.base ?? "",
-                options.output
-              )}/${targetLocaleString}.json`
-            )
-            .toString()
-        )
+        JSON.parse(fs.readFileSync(filename).toString())
       );
 
       const staleTranslations = Object.entries(
@@ -65,10 +61,7 @@ export default async function stale(this: Command) {
           delete currentTranslations.translations[key];
         }
         fs.writeFileSync(
-          `${outputDir(
-            options.base ?? "",
-            options.output
-          )}/${targetLocaleString}.json`,
+          filename,
           JSON.stringify(currentTranslations, null, 2)
         );
         console.log(

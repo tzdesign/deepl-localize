@@ -25,9 +25,21 @@
   "scripts": {
     "build": "tsc",
     "test:translate": "tsc && node dist/index.js translate -b src/test/en-US.json -l de-DE de-CH fr-FR sk-SK -i de-DE",
-    "test:stale": "tsc && node dist/index.js remove-stale -b src/test/en-US.json -l de-DE de-CH",
-    "test:drystale": "tsc && node dist/index.js remove-stale -d -b src/test/en-US.json -l de-DE de-CH"
+    "test:translate:withprefix": "tsc && node dist/index.js translate -b src/test/message-en.json -l de-DE de-CH fr-FR sk-SK -i de-DE",
+    "test:stale": "tsc && node dist/index.js remove-stale -b src/test/en-US.json -l de-DE de-CH sk-SK fr-FR",
+    "test:stale:withprefix": "tsc && node dist/index.js remove-stale -b src/test/message-en.json -l de-DE de-CH sk-SK fr-FR",
+    "test:drystale": "tsc && node dist/index.js remove-stale -d -b src/test/en-US.json -l de-DE de-CH sk-SK fr-FR"
   },
+  "keywords": [
+    "localization",
+    "localize",
+    "translation",
+    "deepl",
+    "angular",
+    "angular-localize",
+    "node",
+    "ai"
+  ],
   "bin": {
     "deepl-localize": "./dist/index.js"
   }

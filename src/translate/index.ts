@@ -8,6 +8,7 @@ import outputDir from "./outputDir";
 import retrieveBase from "./retrieveBase";
 import { TranslationOptions } from "./translationOptions";
 import { localizeFileSchema, validateBase } from "./validateBase";
+import outputFilename from "./outputFilename";
 
 export default async function translate(this: Command) {
   const options = this.opts<TranslationOptions>();
@@ -73,19 +74,14 @@ export default async function translate(this: Command) {
 
     console.log(`Start translation for ${languageName.green}`);
 
-    if (
-      fs.existsSync(
-        `${outputDir(
-          options.base ?? "",
-          options.output
-        )}/${targetLocaleString}.json`
-      ) === false
-    ) {
+    const filename = outputFilename(targetLocaleString, {
+      base: options.base,
+      output: options.output,
+    });
+
+    if (fs.existsSync(filename) === false) {
       fs.writeFileSync(
-        `${outputDir(
-          options.base ?? "",
-          options.output
-        )}/${targetLocaleString}.json`,
+        filename,
         JSON.stringify(
           { locale: targetLocaleString, translations: {} },
           null,
@@ -95,16 +91,7 @@ export default async function translate(this: Command) {
     }
 
     const targetTranslationSafe = localizeFileSchema.safeParse(
-      JSON.parse(
-        fs
-          .readFileSync(
-            `${outputDir(
-              options.base ?? "",
-              options.output
-            )}/${targetLocaleString}.json`
-          )
-          .toString()
-      )
+      JSON.parse(fs.readFileSync(filename).toString())
     );
 
     if (targetTranslationSafe.success === false) {
@@ -168,13 +155,7 @@ export default async function translate(this: Command) {
     progress.stop();
     console.log("");
 
-    fs.writeFileSync(
-      `${outputDir(
-        options.base ?? "",
-        options.output
-      )}/${targetLocaleString}.json`,
-      JSON.stringify(targetTranslation, null, 2)
-    );
+    fs.writeFileSync(filename, JSON.stringify(targetTranslation, null, 2));
   }
 
   writeMeta(meta, outputDir(options.base ?? "", options.output));
