@@ -12,7 +12,7 @@ console.log(
   figlet.textSync("Deepl $localize", { horizontalLayout: "full" }).rainbow
 );
 
-program.version("1.0.0").description("Translate $localize files");
+program.version("1.0.1").description("Translate $localize files");
 
 appendTranslationOption(program.command("remove-stale"))
   .option(
