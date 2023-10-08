@@ -1,0 +1,10 @@
+{
+  "locale": "en",
+  "translations": {
+    "1123557981657403007": "Start game",
+    "3344064097523459939": "Game settings",
+    "1063462873103909661": "Difficulty",
+    "6492056312254451162": "Please fill out your name",
+    "823262032963814625": "From {$unit} - {$discount}% Discount"
+  }
+}
