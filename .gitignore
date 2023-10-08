@@ -10,3 +10,4 @@
 node_modules
 src/test/*
 !src/test/en-US.json
+!src/test/message-en.json
