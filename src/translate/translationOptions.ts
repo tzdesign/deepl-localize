@@ -6,6 +6,7 @@ export type TranslationOptions = {
   locales: string[];
   base?: string;
   informalLocales: string[];
+  compiledI18n: boolean;
 };
 
 export function appendTranslationOption(command: Command) {
@@ -19,5 +20,10 @@ export function appendTranslationOption(command: Command) {
       "-l, --locales  [value...]",
       "Locales to translate to. For example de-DE,fr-FR. If none is given, no translation will happen.",
       []
+    )
+    .option(
+      "-c, --compiled-i18n",
+      "Automatically translate compiled-i18n files. They are a bit different than $localize files, as the base file translation might be empty.",
+      false
     );
 }

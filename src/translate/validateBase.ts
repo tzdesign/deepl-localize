@@ -8,9 +8,14 @@ export function validateBase(string: string) {
   }
 }
 
+export const localizeTranslationSchema = z.union([
+  z.string(),
+  z.record(z.string()),
+]);
+
 export const localizeFileSchema = z.object({
   locale: z.string(),
-  translations: z.record(z.string()),
+  translations: z.record(localizeTranslationSchema),
 });
 
 export type LocalizeFile = z.infer<typeof localizeFileSchema>;

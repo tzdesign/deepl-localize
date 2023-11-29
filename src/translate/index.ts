@@ -110,7 +110,14 @@ export default async function translate(this: Command) {
     );
 
     const filteredTranslations = Object.entries(translations).filter(
-      ([key]) => targetTranslation.translations[key] === undefined
+      ([key]) => {
+        const translation = targetTranslation.translations[key];
+
+        return (
+          translation === undefined ||
+          (typeof translation === "string" && translation.trim() === "")
+        );
+      }
     );
 
     if (filteredTranslations.length === 0) {
@@ -121,7 +128,10 @@ export default async function translate(this: Command) {
     }
 
     progress.start(filteredTranslations.length, 0);
-    for (const [key, sourceText] of filteredTranslations) {
+    for (let [key, sourceText] of filteredTranslations) {
+      if (options.compiledI18n && Boolean(sourceText) === false) {
+        sourceText = key;
+      }
       progress.increment();
       const metaKey =
         targetLocale.language +
@@ -130,27 +140,44 @@ export default async function translate(this: Command) {
           : "");
 
       if (targetTranslation.translations[key]) continue;
-      if (meta[metaKey]?.[key]) {
-        targetTranslation.translations[key] = meta[metaKey][key];
+      if (meta[metaKey]?.[JSON.stringify(sourceText)]) {
+        targetTranslation.translations[key] =
+          meta[metaKey][JSON.stringify(sourceText)];
         continue;
       }
-      const result = await translator.translateText(
-        prepareVariables(sourceText),
-        sourceLanguage.code as deepl.SourceLanguageCode,
-        targetLanguage.code as deepl.TargetLanguageCode,
-        {
-          formality:
-            options.informalLocales?.includes(targetLocaleString) &&
-            targetLanguage.supportsFormality
-              ? "less"
-              : undefined,
-          tagHandling: "xml",
-          ignoreTags: ["x"],
-        }
-      );
-      targetTranslation.translations[key] = cleanVariables(result.text);
+
       meta[metaKey] = meta[metaKey] ?? {};
-      meta[metaKey][key] = cleanVariables(result.text);
+
+      const object =
+        typeof sourceText === "string" ? { flat: sourceText } : sourceText;
+
+      for (const [plural, source] of Object.entries(object)) {
+        const result = await translator.translateText(
+          prepareVariables(source),
+          sourceLanguage.code as deepl.SourceLanguageCode,
+          targetLanguage.code as deepl.TargetLanguageCode,
+          {
+            formality:
+              options.informalLocales?.includes(targetLocaleString) &&
+              targetLanguage.supportsFormality
+                ? "less"
+                : undefined,
+            tagHandling: "xml",
+            ignoreTags: ["x"],
+          }
+        );
+        if (plural === "flat") {
+          targetTranslation.translations[key] = cleanVariables(result.text);
+        } else {
+          targetTranslation.translations[key] =
+            targetTranslation.translations[key] ?? {};
+          (targetTranslation.translations[key] as Record<string, string>)[
+            plural
+          ] = cleanVariables(result.text);
+        }
+
+        meta[metaKey][source] = cleanVariables(result.text);
+      }
     }
     progress.stop();
     console.log("");
