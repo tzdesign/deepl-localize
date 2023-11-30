@@ -62,6 +62,7 @@ deepl-localize translate -b your/path/en-US.json -l de-DE fr-FR -i de-DE -a "YOU
 | -v, --version                      | output the version number                                                                                     |
 | -b, --base  <value>                | The base file path.                                                                                           |
 | -o, --output <value>               | The output folder path. If none is given, the base folder is used.                                            |
+| -c, --compiled-i18n                | Tell the script you use compiled-i18n instead of $localize                                                    |
 | -l, --locales  [value...]          | Locales to translate to. For example de-DE fr-FR. If none is given, no translation will happen. (default: []) |
 | -i, --informal-locales  [value...] | Locales to translate less formal. For example de-DE will use du instead of sie. (default: [])                 |
 | -h, --help                         | display help for command                                                                                      |
@@ -82,6 +83,7 @@ deepl-localize remove-stale -b your/path/en-US.json -l de-DE fr-FR
 | -v, --version             | output the version number                                                                                     |
 | -b, --base  <value>       | The base file path.                                                                                           |
 | -o, --output <value>      | The output folder path. If none is given, the base folder is used.                                            |
+| -c, --compiled-i18n       | Tell the script you use compiled-i18n instead of $localize                                                    |
 | -l, --locales  [value...] | Locales to translate to. For example de-DE fr-FR. If none is given, no translation will happen. (default: []) |
 | -d,--dry-run              | Just show the stale translations. The script will not remove and just show them. (default: false)             |
 | -h, --help                | display help for command                                                                                      |
