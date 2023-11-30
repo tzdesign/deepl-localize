@@ -169,10 +169,14 @@ export default async function translate(this: Command) {
         if (plural === "flat") {
           targetTranslation.translations[key] = cleanVariables(result.text);
         } else {
-          targetTranslation.translations[key] =
-            targetTranslation.translations[key] ?? {};
+          if (
+            targetTranslation.translations[key] === undefined ||
+            targetTranslation.translations[key] === ""
+          ) {
+            targetTranslation.translations[key] = {};
+          }
           (targetTranslation.translations[key] as Record<string, string>)[
-            plural
+            plural.toString()
           ] = cleanVariables(result.text);
         }
 
