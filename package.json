@@ -29,6 +29,7 @@
     "test:stale": "tsc && node dist/index.js remove-stale -b src/test/en-US.json -l de-DE de-CH sk-SK fr-FR",
     "test:stale:withprefix": "tsc && node dist/index.js remove-stale -b src/test/message-en.json -l de-DE de-CH sk-SK fr-FR",
     "test:drystale": "tsc && node dist/index.js remove-stale -d -b src/test/en-US.json -l de-DE de-CH sk-SK fr-FR",
+    "test:stale:compiled-i18n": "tsc && node dist/index.js remove-stale -b src/test/compiled-i18n/en-US.json -l de-DE fr-FR sk-SK --compiled-i18n",
     "test:compiled-i18n": "tsc && node dist/index.js translate -b src/test/compiled-i18n/en-US.json -l de-DE fr-FR sk-SK -i de-DE --compiled-i18n"
   },
   "keywords": [
