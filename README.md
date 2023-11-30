@@ -1,6 +1,6 @@
-# deepl $localize tranlate
+# deepl $localize / compiled-i18n tranlate
 
-This tool uses deepl to translate all extracted languages by angular/localize.
+This tool uses deepl to translate all extracted languages by either angular/localize or compiled-i18n.
 
 ## About
 
@@ -19,7 +19,7 @@ The [$localize ](https://angular.io/api/localize/init/localize)function is part 
 The $localize function is used to mark and translate text within an Angular application. It allows developers to define messages in different languages and provides a way to extract those messages for translation. Here's how it typically works:
 
 1. Developers use the $localize function to mark text in their Angular templates and components that need to be translated. For example:
-```tsx
+```ts
 const message = $localize`Hello, World!`;
 ```
 2. After marking the text, developers can use Angular's localization tools to extract these marked messages into a translation file.
@@ -29,6 +29,24 @@ const message = $localize`Hello, World!`;
 Keep in mind that Angular's internationalization and localization features, including $localize, may evolve over time, so it's a good practice to refer to the official Angular documentation or resources for the most up-to-date information on how to use these features in your Angular applications.
 
 > Localize perfectly works with other frameworks as well. See [Miško's approach](https://github.com/mhevery/qwik-i18n) for [qwik](https://qwik.builder.io/).
+
+### What is compiled-i18n?
+
+The package [compiled-i18n](https://www.npmjs.com/package/compiled-i18n) is a [vite](https://vitejs.dev/)-plugin to solve localization on build time.
+This means the extraction is integrated on top of vite's build process and will be directly there if the build server is running.
+
+The integration is much simpler, because you don't need to set it up, you only have to call a function to set the locale.
+The translation files look very similar to $localize files.
+
+Per default it's translation function is exported as `_` and looks like this in the code:
+
+```ts
+import {_} from 'compiled-i18n'
+const message = _`Hello, World!`;
+```
+
+On top [compiled-i18n](https://www.npmjs.com/package/compiled-i18n) is doing pluralization without adding a different api.
+
 
 ## Installation
 
