@@ -132,7 +132,7 @@ export default async function translate(this: Command) {
 
     progress.start(filteredTranslations.length, 0);
     for (let [key, sourceText] of filteredTranslations) {
-      if (options.compiledI18n && !Boolean(sourceText)) {
+      if (options.compiledI18n && Boolean(sourceText) === false) {
         sourceText = key;
       }
       progress.increment();
