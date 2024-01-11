@@ -6,6 +6,7 @@
   "repository": {
     "url": "https://github.com/tzdesign/deepl-localize"
   },
+  "version": "2.0.6",
   "license": "MIT",
   "dependencies": {
     "cli-progress": "^3.12.0",
