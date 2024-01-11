@@ -151,12 +151,14 @@ export default async function translate(this: Command) {
 
       meta[metaKey] = meta[metaKey] ?? {};
 
-      if(contextBuffer.length < maxContextLength) {
-        if(typeof sourceText === "string")
-          contextBuffer += '\n' + sourceText;
-        else {
-          contextBuffer += '\n' + Object.values(sourceText).join('\n');
-        }
+      const contextToAdd = typeof sourceText === "string" ? sourceText : Object.values(sourceText).join('\n');
+
+      if(contextBuffer.length > maxContextLength) {
+        let newBuffer = contextBuffer.substring(contextToAdd.length);
+        newBuffer += contextToAdd;
+        contextBuffer = newBuffer;
+      } else {
+        contextBuffer += contextToAdd;
       }
 
       const object =
