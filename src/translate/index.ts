@@ -41,6 +41,7 @@ export default async function translate(this: Command) {
   const sourceLanguages = await translator.getSourceLanguages();
   const targetLanguages = await translator.getTargetLanguages();
   let meta = readMeta(outputDir(options.base ?? "", options.output));
+  const maxContextLength = 8000;
 
   const sourceLanguage =
     sourceLanguages.find(s => s.code === locale.baseName) ??
@@ -127,9 +128,11 @@ export default async function translate(this: Command) {
       continue;
     }
 
+    let contextBuffer = "";
+
     progress.start(filteredTranslations.length, 0);
     for (let [key, sourceText] of filteredTranslations) {
-      if (options.compiledI18n && Boolean(sourceText) === false) {
+      if (options.compiledI18n && !Boolean(sourceText)) {
         sourceText = key;
       }
       progress.increment();
@@ -148,6 +151,16 @@ export default async function translate(this: Command) {
 
       meta[metaKey] = meta[metaKey] ?? {};
 
+      const contextToAdd = typeof sourceText === "string" ? sourceText : Object.values(sourceText).join('\n');
+
+      if(contextBuffer.length > maxContextLength) {
+        let newBuffer = contextBuffer.substring(contextToAdd.length);
+        newBuffer += contextToAdd;
+        contextBuffer = newBuffer;
+      } else {
+        contextBuffer += contextToAdd;
+      }
+
       const object =
         typeof sourceText === "string" ? { flat: sourceText } : sourceText;
 
@@ -157,6 +170,7 @@ export default async function translate(this: Command) {
           sourceLanguage.code as deepl.SourceLanguageCode,
           targetLanguage.code as deepl.TargetLanguageCode,
           {
+            context: contextBuffer,
             formality:
               options.informalLocales?.includes(targetLocaleString) &&
               targetLanguage.supportsFormality
