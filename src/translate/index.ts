@@ -17,10 +17,9 @@ export default async function translate(this: Command) {
   console.log(`\tOutput: ${outputDir(options.base ?? "", options.output)}`);
   console.log(`\tLocales: ${options.locales.join(", ")}`);
   console.log(
-    `\tLocales informal: ${
-      options.informalLocales.length === 0
-        ? "none"
-        : options.informalLocales.join(", ")
+    `\tLocales informal: ${options.informalLocales.length === 0
+      ? "none"
+      : options.informalLocales.join(", ")
     }`
   );
   console.log("");
@@ -51,28 +50,25 @@ export default async function translate(this: Command) {
 
   for (const targetLocaleString of options.locales) {
     const isInformal = options.informalLocales?.includes(targetLocaleString);
-
-    const targetLocale = new Intl.Locale(targetLocaleString);
+    const guessedTarget = targetLocaleString === 'en' ? 'en-US' : targetLocaleString
+    const targetLocale = new Intl.Locale(guessedTarget);
     const targetLanguage =
       targetLanguages.find(s => s.code === targetLocale.baseName) ??
       targetLanguages.find(s => s.code === targetLocale.language);
 
     if (targetLanguage === undefined) {
       console.error(
-        `Could not find target language for ${
-          targetLocaleString.green
-        }.\nSee supported target languages are ${
-          targetLanguages.map(t => t.code).join(", ").yellow
+        `Could not find target language for ${targetLocaleString.green
+        }.\nSee supported target languages are ${targetLanguages.map(t => t.code).join(", ").yellow
         }`
       );
       continue;
     }
 
-    const languageName = `${targetLanguage.name} ${
-      isInformal ? "(informal)" : ""
-    }`;
+    const languageName = `${targetLanguage.name} ${isInformal ? "(informal)" : ""
+      }`;
 
-    console.log(`Start translation for ${languageName.green}`);
+    console.log(`Start translation for ${languageName.green} (${targetLocaleString})`);
 
     const filename = outputFilename(targetLocaleString, {
       base: options.base,
@@ -159,7 +155,7 @@ export default async function translate(this: Command) {
           {
             formality:
               options.informalLocales?.includes(targetLocaleString) &&
-              targetLanguage.supportsFormality
+                targetLanguage.supportsFormality
                 ? "less"
                 : undefined,
             tagHandling: "xml",
