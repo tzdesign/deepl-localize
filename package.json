@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "3.1.0",
     "cli-progress": "^3.12.0",
     "colors": "^1.4.0",
     "commander": "^11.0.0",
@@ -25,6 +26,7 @@
   "scripts": {
     "build": "tsc",
     "test:translate": "tsc && node dist/index.js translate -b src/test/en-US.json -l de-DE de-CH fr-FR sk-SK en_US -i de-DE ",
+    "test:translate:context": "tsc && node dist/index.js translate -c -C -b src/test/en.json -l de-DE -i de-DE ",
     "test:translate:withprefix": "tsc && node dist/index.js translate -b src/test/message-en.json -l de-DE de-CH fr-FR sk-SK -i de-DE",
     "test:stale": "tsc && node dist/index.js remove-stale -b src/test/en-US.json -l de-DE de-CH sk-SK fr-FR",
     "test:stale:withprefix": "tsc && node dist/index.js remove-stale -b src/test/message-en.json -l de-DE de-CH sk-SK fr-FR",
