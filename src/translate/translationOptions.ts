@@ -5,6 +5,7 @@ export type TranslationOptions = {
   output?: string;
   locales: string[];
   base?: string;
+  withContext?: boolean;
   informalLocales: string[];
   compiledI18n: boolean;
 };
@@ -15,6 +16,10 @@ export function appendTranslationOption(command: Command) {
     .option(
       "-o, --output <value>",
       "The output folder path. If none is given, the base folder is used."
+    )
+    .option(
+      "-C,--with-context",
+      "If you want to use the source code as the translation context. This will take much longer as it's grepping the source code.",
     )
     .option(
       "-l, --locales  [value...]",

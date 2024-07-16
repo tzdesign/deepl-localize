@@ -9,6 +9,7 @@ import retrieveBase from "./retrieveBase";
 import { TranslationOptions } from "./translationOptions";
 import { localizeFileSchema, validateBase } from "./validateBase";
 import outputFilename from "./outputFilename";
+import findContext from "../utils/findContext";
 
 export default async function translate(this: Command) {
   const options = this.opts<TranslationOptions>();
@@ -16,6 +17,10 @@ export default async function translate(this: Command) {
   console.log(`\tBase: ${options.base}`);
   console.log(`\tOutput: ${outputDir(options.base ?? "", options.output)}`);
   console.log(`\tLocales: ${options.locales.join(", ")}`);
+  if (options.withContext)
+    console.log(`\tWith context: ${options.withContext}`);
+  if (options.compiledI18n)
+    console.log(`\tCompiled i18n: ${options.compiledI18n}`);
   console.log(
     `\tLocales informal: ${options.informalLocales.length === 0
       ? "none"
@@ -161,6 +166,7 @@ export default async function translate(this: Command) {
                   : undefined,
               tagHandling: "xml",
               ignoreTags: ["x"],
+              context: options.withContext ? await findContext(source) : undefined,
             }
           );
           if (plural === "flat") {
