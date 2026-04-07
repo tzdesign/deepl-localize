@@ -6,6 +6,9 @@
   "repository": {
     "url": "https://github.com/tzdesign/deepl-localize"
   },
+  "engines": {
+    "node": ">= 17.0.0"
+  },
   "license": "MIT",
   "dependencies": {
     "app-root-path": "3.1.0",
