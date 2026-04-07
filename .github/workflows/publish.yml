@@ -5,17 +5,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: "16.x"
+          node-version: ">= 17.0.0"
           registry-url: "https://registry.npmjs.org"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Install dependencies and build 🔧
         run: yarn install --frozen-lockfile && yarn build
+      - name: Set version
+        run: npm version $(echo "${{ github.event.release.tag_name }}" | sed "s/v//") --no-git-tag-version
       - name: Publish package on NPM 📦
-        run: yarn publish --new-version $(echo "${{ github.event.release.tag_name }}" | sed "s/v//") --non-interactive --no-commit-hooks --no-git-tag-version
+        run: npm publish --provenance --access public
