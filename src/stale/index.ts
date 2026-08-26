@@ -4,7 +4,7 @@ import outputDir from "../translate/outputDir";
 import retrieveBase from "../translate/retrieveBase";
 import { localizeFileSchema, validateBase } from "../translate/validateBase";
 import fs, { write } from "fs";
-import "colors";
+import "@colors/colors";
 import { readMeta, writeMeta } from "../translate/meta";
 import outputFilename from "../translate/outputFilename";
 

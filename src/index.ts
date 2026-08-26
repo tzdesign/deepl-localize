@@ -2,7 +2,7 @@
 import { Command } from "commander";
 import figlet from "figlet";
 import translate from "./translate";
-import "colors";
+import "@colors/colors";
 import { appendTranslationOption } from "./translate/translationOptions";
 import stale from "./stale";
 

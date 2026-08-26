@@ -1,7 +1,7 @@
 import { z } from "zod";
 import fs from "fs";
 export function readMeta(path: string) {
-  const metaSchema = z.record(z.record(z.string()));
+  const metaSchema = z.record(z.string(), z.record(z.string(), z.string()));
   try {
     if (!fs.existsSync(path)) fs.mkdirSync(path);
     if (!fs.existsSync(`${path}/.meta`)) fs.mkdirSync(`${path}/.meta`);
