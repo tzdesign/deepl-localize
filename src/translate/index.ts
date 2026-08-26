@@ -1,5 +1,5 @@
 import cliProgress from "cli-progress";
-import "colors";
+import "@colors/colors";
 import { Command } from "commander";
 import * as deepl from "deepl-node";
 import fs from "fs";

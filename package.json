@@ -7,23 +7,23 @@
     "url": "https://github.com/tzdesign/deepl-localize"
   },
   "engines": {
-    "node": ">= 17.0.0"
+    "node": ">=20.0.0"
   },
   "license": "MIT",
   "dependencies": {
+    "@colors/colors": "^1.6.0",
     "app-root-path": "3.1.0",
     "cli-progress": "^3.12.0",
-    "colors": "^1.4.0",
-    "commander": "^11.0.0",
-    "deepl-node": "^1.25.0",
-    "figlet": "^1.6.0",
-    "zod": "^3.22.4"
+    "commander": "^14.0.0",
+    "deepl-node": "^1.28.0",
+    "figlet": "^1.11.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/cli-progress": "^3.11.3",
-    "@types/figlet": "^1.5.6",
-    "@types/node": "^20.8.2",
-    "typescript": "^5.2.2"
+    "@types/cli-progress": "^3.11.6",
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^26.3.0",
+    "typescript": "^7.0.2"
   },
   "scripts": {
     "build": "tsc",
